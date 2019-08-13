@@ -19,6 +19,7 @@ def my_min(list)
     min
 end
 # O(n^2)
+# O(1) space complexity because only 3 variables are being created which only hold one ele each
 
 list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
 p my_min(list)  # =>  -5
@@ -41,6 +42,7 @@ def my_min(list)
     min
 end
 #O(n)
+#O(1)
 list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
 p my_min(list)  # =>  -5
 
@@ -58,7 +60,10 @@ def largest_contiguous_subsum(list)
     sub_arr.map! {|ele| ele.sum}.max
 end
 
-#O(n^2 + 1)
+#O(n^3) <--wrong time complexity (don't have to add constant, keep biggest n term)
+    #revision: O(n^3) line56: splicing adds another n operation n^2 * n = O(N^3)
+#o(n) space complexity 
+    # space complexity is actually O(n!)
 
 #Phase II
 
@@ -66,12 +71,15 @@ def largest_contiguous_subsum(list)
     max_sum = list[0]
 	temp_sum = list[0]
 	debugger
-	#0(1)
-	return list.max if list.all? { |ele| ele < 0 } 
+    #0(n) #note: only n^2 if nested
+    
+    return list.max if list.all? { |ele| ele < 0 } 
+    #need to add O(1) return case
+    # Write a new function using O(n) time with O(1) memory. Keep a running tally of the largest sum.
 
     list_2 = list.drop(1)
     list_2.each do |ele|
-		temp_sum = [ele, temp_sum + ele].max
+		temp_sum = [ele, temp_sum + ele].max #O(1) operation, should refactor 
         #temp_sum = ele = 4, temp_sum = 1+3, [4, 8].max
         # [3, -7]
         #[3, 5 + 3] = > 3, 8 = > 8 max = 5
